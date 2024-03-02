@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mondrian Project</title>
+    <style>
+      /* 
+    Write your CSS here 
+    Gap Colour: #000
+    White: #F0F1EC
+    Red: #E72F24
+    Black: #232629
+    Blue: #004592
+    Yellow: #F9D01E
+
+    For dimensions, see dimensions.png image.
+    HINT: Remember you can't change the properties of grid lines.
+    But grid lines are transparent!
+    */
+    .frame{
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+      .container {
+        display: grid;
+        height: 748px;
+        width: 748px;
+        grid-template-columns: 320px 360px 50px;
+        grid-template-rows: 414px 295px 20px;
+        gap: 10px;
+        background-color: #000;
+      }
+      .a {
+        background-color: #e72f24;
+      }
+      .b {
+        background-color: #f0f1ec;
+        grid-column-start: 2;
+        grid-column-end: -1;
+      }
+      .c {
+        background-color: #f0f1ec;
+      }
+      .d {
+        background-color: #f0f1ec;
+      }
+      .e {
+        background-color: #f0f1ec;
+        grid-column-start: 3;
+        grid-row-start: 2;
+        grid-row-end: 4;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+      padding: 0;
+      }
+      .suba {
+        background-color: #004592;
+        flex-basis: 130px;
+      }
+      .subb {
+        background-color: #000;
+        flex-basis: 10px;
+      }
+      .subc {
+        background-color: #f0f1ec;
+        flex-basis: 184px;
+      }
+      .f {
+        background-color: #f0f1ec;
+      }
+      .g {
+        background-color: #f0f1ec;
+        display: flex;
+        margin: 0;
+      padding: 0;
+      }
+      .subd {
+        background-color: #f9d01e;
+        flex-basis: 198px;
+      }
+      .sube {
+        background-color: #000;
+        flex-basis: 9px;
+      }
+      .subf {
+        background-color: #232629;
+        flex-basis: 153px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Write your HTML here -->
+    <div class="frame">
+      <div class="flex-container">
+        <div class="container">
+          <div class="box a"></div>
+          <div class="box b"></div>
+          <div class="box c"></div>
+          <div class="box d"></div>
+          <div class="box e">
+            <div class="suba"></div>
+            <div class="subb"></div>
+            <div class="subc"></div>
+          </div>
+          <div class="box f"></div>
+          <div class="box g">
+            <div class="subd"></div>
+            <div class="sube"></div>
+            <div class="subf"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

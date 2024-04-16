@@ -1,18 +1,16 @@
-//alert("Test");
-
-var gamePattern = [];
-var userClickedPattern = [];
-var buttonColours = ["red", "blue", "green", "yellow"];
-var randomChosenColour;
-var userChosenColour;
-var level = 0;
-var started = false;
+let gamePattern = [];
+let userClickedPattern = [];
+const buttonColours = ["red", "blue", "green", "yellow"];
+let randomChosenColour;
+let userChosenColour;
+let level = 0;
+let started = false;
 
 function nextSequence() {
   userClickedPattern = [];
   level++;
   $("h1").text("Level " + level);
-  var randomNumber = Math.round(Math.random() * 3);
+  let randomNumber = Math.round(Math.random() * 3);
   randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
 
@@ -23,7 +21,7 @@ function nextSequence() {
 }
 
 function playSound(color) {
-  var audio = new Audio("./sounds/" + color + ".mp3");
+  let audio = new Audio("./sounds/" + color + ".mp3");
   audio.play();
 }
 

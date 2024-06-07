@@ -1,3 +1,7 @@
+'use strict'
+
+//https://secrets-api.appbrewery.com/
+
 import express from "express";
 import axios from "axios";
 

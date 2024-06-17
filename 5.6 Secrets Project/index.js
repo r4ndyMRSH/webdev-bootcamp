@@ -17,7 +17,7 @@ import axios from "axios";
 import morgan from "morgan";
 
 const app = express();
-const port = 3000;
+const port = 3010;
 const API_URL = "https://secrets-api.appbrewery.com/random";
 
 app.use(express.static("public"));

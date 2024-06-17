@@ -18,13 +18,17 @@ import morgan from "morgan";
 
 const app = express();
 const port = 3000;
+const API_URL = "https://secrets-api.appbrewery.com/random";
 
 app.use(express.static("public"));
 app.use(morgan("dev"));
 
-app.get("/", (req, res) => {
-  const result = axios.get("");  
-  res.render("index.ejs");
+app.get("/", async (req, res) => {
+  const result = await axios.get("https://secrets-api.appbrewery.com/random");
+  res.render("index.ejs", {
+    secret: result.data.secret,
+    user: result.data.username,
+  });
 });
 
 app.listen(port, () => {

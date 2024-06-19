@@ -9,9 +9,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //1. GET a random joke
 
+app.get("/random/", (req, res) => {
+  const random = Math.floor(Math.random() * jokes.length);
+  //res.send(jokes[random]);
+  res.json(jokes[random]);
+});
+
 //2. GET a specific joke
 
+app.get("/jokes/:id", (req, res) => {
+  const id = req.params.id;
+  const result = jokes.find((element) => element.id == id);
+  res.json(result);
+});
 //3. GET a jokes by filtering on the joke type
+
+app.get("/filter/", (req, res) => {
+  const type = req.query.type;
+  const result = jokes.filter((element) => element.jokeType === type);
+  console.log(result);
+  res.json(result);
+});
 
 //4. POST a new joke
 

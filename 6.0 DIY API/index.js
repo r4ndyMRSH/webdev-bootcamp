@@ -32,20 +32,47 @@ app.get("/filter/", (req, res) => {
 });
 
 //4. POST a new joke
-app.post("/jokes/", (req,res)=>{
-
+app.post("/jokes/", (req, res) => {
   const newElement = {
-    id: (jokes.length + 1),
+    id: jokes.length + 1,
     jokeText: req.body.text,
     jokeType: req.body.type,
   };
   jokes.push(newElement);
-  res.json(jokes[jokes.length -1]);
+  res.json(jokes[jokes.length - 1]);
 });
 //5. PUT a joke
 
-//6. PATCH a joke
+app.put("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const newData = {
+    id: id,
+    jokeText: req.body.text,
+    jokeType: req.body.type,
+  };
+  const index = jokes.findIndex((element) => element.id === id);
 
+  jokes[index] = newData;
+  console.log(index);
+  console.log(jokes[index]);
+  res.json(jokes[index]);
+});
+
+//6. PATCH a joke
+app.patch("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const oldJoke = jokes.find((element) => element.id === id);
+  const newJoke = {
+    id: id,
+    jokeText: req.body.text || oldJoke.jokeText,
+    jokeType: req.body.type || oldJoke.jokeType,
+  };
+
+  const index = jokes.findIndex((element) => element.id === id);
+  jokes[index] = newJoke;
+  console.log(jokes[index]);
+  res.json(jokes[index]);
+});
 //7. DELETE Specific joke
 
 //8. DELETE All jokes

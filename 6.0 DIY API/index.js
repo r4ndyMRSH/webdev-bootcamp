@@ -73,9 +73,32 @@ app.patch("/jokes/:id", (req, res) => {
   console.log(jokes[index]);
   res.json(jokes[index]);
 });
-//7. DELETE Specific joke
 
 //8. DELETE All jokes
+app.delete("/jokes/all", (req, res) => {
+  const userKey = req.query.key;
+
+  if (userKey === masterKey) {
+    jokes = [];
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(404).json({ error: `Wrong key!!!` });
+  }
+});
+
+//7. DELETE Specific joke
+
+app.delete("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = jokes.findIndex((element) => element.id === id);
+  console.log(index);
+  if (index > -1) {
+    jokes.splice(index, 1);
+    res.sendStatus(200);
+  } else {
+    res.status(400).json({ error: `Joke whith id: ${id} not found` });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);

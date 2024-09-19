@@ -34,11 +34,13 @@ app.get("/", async (req, res) => {
 
   result.rows.forEach((element) => {
     countries.push(element.country_code);
-    //total++;
+    total++;
   });
-  total = result.rowCount;
+  total = countries.length;
   res.render("index.ejs", { countries: countries, total: total });
   //Write your code here.
+
+  db.end();
 });
 
 app.listen(port, () => {

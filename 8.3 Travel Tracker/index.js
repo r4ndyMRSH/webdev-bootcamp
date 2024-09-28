@@ -38,9 +38,23 @@ app.get("/", async (req, res) => {
   });
   total = countries.length;
   res.render("index.ejs", { countries: countries, total: total });
-  //Write your code here.
+});
 
-  db.end();
+//Adding country
+app.post("/add", async (req, res) => {
+  let userInput = req.body["country"];
+
+  const result = await db.query(
+    `Select country_code from countries where country_name = '${userInput}'`
+  );
+
+  if (result.rows.length !== 0) {
+    await db.query(
+      `INSERT INTO visited_countries (country_code) VALUES ('${result.rows[0].country_code}')`
+    );
+    console.log(result.rows[0].country_code);
+  }
+  res.redirect("/");
 });
 
 app.listen(port, () => {

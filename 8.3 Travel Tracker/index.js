@@ -20,41 +20,60 @@ app.use(express.static("public"));
 
 db.connect();
 
-app.get("/", async (req, res) => {
+async function checkVisitedCountries() {
   let countries = [];
-  let total = 0;
   const result = await db.query("SELECT country_code FROM visited_countries");
 
-  console.log(result.rows[0].country_code);
-
-  /*   for (let i = 0; i < result.rows.length; i++){
-    countries.push(result.rows[i].country_code);
-    total++;
-  } */
+  //  console.log(result.rows[0].country_code);
 
   result.rows.forEach((element) => {
     countries.push(element.country_code);
-    total++;
   });
-  total = countries.length;
-  res.render("index.ejs", { countries: countries, total: total });
+  return countries;
+}
+
+app.get("/", async (req, res) => {
+  const countries = await checkVisitedCountries();
+
+  res.render("index.ejs", { countries: countries, total: countries.length });
 });
 
 //Adding country
 app.post("/add", async (req, res) => {
   let userInput = req.body["country"];
 
-  const result = await db.query(
-    `Select country_code from countries where country_name = '${userInput}'`
-  );
-
-  if (result.rows.length !== 0) {
-    await db.query(
-      `INSERT INTO visited_countries (country_code) VALUES ('${result.rows[0].country_code}')`
+  try {
+    const result = await db.query(
+      //Using LOWER for error handling
+      `Select country_code from countries where LOWER(country_name) LIKE '%${userInput.toLowerCase()}%'`
     );
-    console.log(result.rows[0].country_code);
+
+    const countryCode =result.rows[0].country_code;
+    try {
+      await db.query(
+        `INSERT INTO visited_countries (country_code) VALUES ('${countryCode}')`
+      );
+      //console.log(result.rows[0].country_code);
+
+      res.redirect("/");
+    } catch (err) {
+      console.log(err);
+      const countries = await checkVisitedCountries();
+      res.render("index.ejs", {
+        countries: countries,
+        total: countries.length,
+        error: "Country has already been added, try again.",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    const countries = await checkVisitedCountries();
+    res.render("index.ejs", {
+      countries: countries,
+      total: countries.length,
+      error: "Country name does not exist, try again.",
+    });
   }
-  res.redirect("/");
 });
 
 app.listen(port, () => {
